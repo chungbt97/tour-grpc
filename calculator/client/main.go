@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	pb "github.com/Chungbien/udemy-grpc-course/calculator/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -18,4 +20,18 @@ func main() {
 
 	client := pb.NewCalculatorServiceClient(clientConnection)
 	log.Printf("Client is: %v", client)
+	getSum(client)
+}
+
+func getSum(c pb.CalculatorServiceClient) {
+	fmt.Printf("Get Sum")
+	res, err := c.Sum(context.Background(), &pb.SumRequest{
+		NumberA: 10,
+		NumberB: 20,
+	})
+
+	if err != nil {
+		log.Fatalf("Can not get sum: %v", err)
+	}
+	log.Printf("Client is: %v", res.Result)
 }

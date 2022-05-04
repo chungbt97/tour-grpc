@@ -1,15 +1,27 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	calulatorPb "github.com/Chungbien/udemy-grpc-course/calculator/proto"
+	pb "github.com/Chungbien/udemy-grpc-course/calculator/proto"
 	"google.golang.org/grpc"
 	"log"
 	"net"
 )
 
 type Server struct {
-	calulatorPb.UnimplementedCalculatorServiceServer
+	pb.UnimplementedCalculatorServiceServer
+}
+
+func (s *Server) Sum(ctx context.Context, request *pb.SumRequest) (*pb.SumResponse, error) {
+	fmt.Printf("Received Sum RPC: %v\n", request)
+	firstNumber := request.NumberA
+	secondNumber := request.NumberB
+	sum := firstNumber + secondNumber
+	res := &pb.SumResponse{
+		Result: int64(sum),
+	}
+	return res, nil
 }
 
 func main() {
@@ -20,7 +32,7 @@ func main() {
 	}
 	s := grpc.NewServer()
 
-	calulatorPb.RegisterCalculatorServiceServer(s, &Server{})
+	pb.RegisterCalculatorServiceServer(s, &Server{})
 	err = s.Serve(lis)
 	if err != nil {
 		log.Fatalf("Err:", err)
