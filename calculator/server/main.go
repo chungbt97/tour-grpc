@@ -1,7 +1,7 @@
 package main
 
 import (
-	calulatorPb "github.com/Chungbien/udemy-grpc-course/calculator/proto"
+	calulatorPb "github.com/Chungbien/udemy-grpc-course/calculator"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -10,7 +10,7 @@ import (
 type Server struct{}
 
 func main() {
-	lis, err := net.Listen('tcp', "127.0.0.1:8080")
+	lis, err := net.Listen("tcp", "127.0.0.1:8080")
 	if err != nil {
 		log.Fatalf("Err:", err)
 	}
