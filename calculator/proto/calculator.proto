@@ -4,6 +4,15 @@ package calculator;
 
 option go_package = "github.com/Chungbien/udemy-grpc-course/calculator/proto";
 
-service CalculatorService {
+message SumRequest {
+  int32 numberA = 1;
+  int32 numberB = 2;
+}
 
+message SumResponse {
+  int64 result = 1;
+}
+
+service CalculatorService {
+  rpc Sum(SumRequest) returns (SumResponse) {}
 }
