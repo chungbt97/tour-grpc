@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package stream;
+
+option go_package = "github.com/Chungbien/udemy-grpc-course/stream";
+
+message StreamRequest {
+  int32 steamReq = 1;
+}
+message StreamResponse {
+  int32 streamRes = 1;
+}
+
+service StreamService {
+  rpc LiveStream(StreamRequest) returns (stream StreamResponse);
+}
